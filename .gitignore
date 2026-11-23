@@ -1,0 +1,62 @@
+# =============================================================================
+# PeTTa Agentic AI Framework - .gitignore
+# =============================================================================
+
+# 1. Environment & API Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.token
+
+# 2. Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# 3. Python Bytecode & Caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# 4. Streamlit & Web UI Caches
+.streamlit/
+*.streamlit
+
+# 5. Runtime Telemetry & Session State Files
+memory/session_*
+memory/*.log
+memory/gateway_stdout.log
+memory/*.tsv
+memory/*.jsonl
+memory/*.txt
+
+# 6. Persistent Memory Data Dumps (Keep Directory Structure via .gitkeep)
+memory/long_term/*.data
+memory/episodic/*.data
+memory/adaptation/*.data
+memory/index/*.data
+!memory/**/.gitkeep
+
+# 7. Ephemeral Logs & Dumps
+*.log
+*.tmp
+*.dump
+*.metta.dump
+scratch/
+
+# 8. Editor & OS Artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
