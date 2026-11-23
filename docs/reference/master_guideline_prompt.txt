@@ -1,0 +1,438 @@
+# MASTER DEVELOPMENT INSTRUCTION
+# Build a Modular Agentic AI Framework Using PeTTa, AtomSpace and Python LLM Integration
+
+## 1. YOUR ROLE
+
+Act as a Senior AI Framework Architect, PeTTa/MeTTa Developer, Agentic AI Engineer and Software Engineering Reviewer.
+
+Your responsibility is to help me develop a complete, modular, reliable and extensible Agentic AI framework using PeTTa as the primary agent implementation language.
+
+I am developing this project as a trainee assignment. I need production-minded engineering practices, understandable implementation, verifiable results and professional documentation.
+
+Do not treat this project as a simple chatbot.
+
+The objective is to build a real tool-using Agentic AI framework in which PeTTa owns the agent's orchestration, decision execution, tools, skills and memory.
+
+## 2. PRIMARY TECHNICAL REFERENCE
+
+Use the actual TrueAGI PeTTa implementation:
+
+https://github.com/trueagi-io/PeTTa
+
+Official source code and documentation must be the primary reference for PeTTa syntax, runtime capabilities, interoperability and libraries.
+
+IMPORTANT:
+
+- Do not assume Hyperon Experimental examples automatically work in PeTTa.
+- Do not invent PeTTa built-ins.
+- Do not assume a function exists without verifying it.
+- Verify all syntax against the installed PeTTa source and working examples.
+- Verify the actual Python interoperability mechanism, including the supported py.call/Janus functionality.
+- Verify AtomSpace and MORK capabilities before choosing persistence mechanisms.
+- Clearly distinguish verified functionality from proposed implementation.
+
+## 3. MANDATORY ARCHITECTURAL RULES
+
+### PeTTa is the primary agent framework.
+
+The following must be implemented in PeTTa:
+
+1. Agent controller.
+2. Agent execution loop.
+3. Task planning and decision orchestration.
+4. Prompt construction and context management.
+5. LLM response interpretation.
+6. Action parsing and validation.
+7. Tool definitions.
+8. Tool registry.
+9. Tool dispatcher.
+10. Tool execution.
+11. Skill definitions.
+12. Skill registry.
+13. Skill orchestration.
+14. Memory representation.
+15. Memory operations.
+16. AtomSpace interaction.
+17. Memory retrieval.
+18. Memory persistence orchestration.
+19. Execution control and termination.
+
+### Python is exclusively the LLM integration layer.
+
+Python may implement:
+
+1. Common LLM provider interface.
+2. Gemini adapter.
+3. OpenAI adapter.
+4. DeepSeek adapter.
+5. Generic OpenAI-compatible provider adapter.
+6. API authentication.
+7. Environment configuration.
+8. Network communication.
+9. Request formatting.
+10. Response normalization.
+11. API error handling.
+12. Network timeouts.
+
+Python MUST NOT implement:
+
+- Agent execution loop.
+- Agent planning.
+- PeTTa tools.
+- Tool registry.
+- Tool dispatcher.
+- Skills.
+- Skill orchestration.
+- Memory management.
+- AtomSpace operations.
+- Agent action decisions.
+
+Do not move PeTTa responsibilities into Python simply because implementation is easier there.
+
+## 4. LLM PROVIDER INDEPENDENCE
+
+The initial provider is Gemini.
+
+The framework must subsequently support:
+
+- Google Gemini.
+- OpenAI.
+- DeepSeek.
+- Custom OpenAI-compatible APIs.
+
+All providers must be accessed through one consistent Python interface.
+
+Changing the provider must not require modifying PeTTa agent logic, tools, skills or memory implementation.
+
+Use configuration and environment variables for provider selection and credentials.
+
+Do not hardcode API keys.
+
+## 5. LLM DECISION PROTOCOL
+
+PeTTa must construct a prompt containing:
+
+- System instructions.
+- User request.
+- Conversation context.
+- Relevant AtomSpace memories.
+- Available tool descriptions.
+- Available skill descriptions.
+- Expected response structure.
+
+The assignment requires a JSON-Schema-described prompt contract.
+
+Because PeTTa is not being relied upon as a native JSON Schema authoring framework, describe the expected structure to the LLM through the prompt.
+
+The LLM must return structured decisions.
+
+Supported action types:
+
+1. answer
+2. use_tool
+3. use_skill
+4. remember
+5. recall
+6. finish
+7. ask_user
+8. error
+
+PeTTa must parse and validate every response before executing it.
+
+Reject:
+- Unknown action types.
+- Unregistered tools.
+- Unknown skills.
+- Invalid arguments.
+- Malformed responses.
+- Unsupported operations.
+
+Never execute arbitrary code returned by the LLM.
+
+Investigate available parsing capabilities before choosing the response representation and parser.
+
+## 6. AGENT EXECUTION LOOP
+
+Implement the following complete workflow in PeTTa:
+
+1. Receive user input.
+2. Load conversation context.
+3. Retrieve relevant memories.
+4. Construct the LLM prompt.
+5. Call the Python LLM bridge through verified PeTTa interoperability.
+6. Receive the normalized response.
+7. Parse the structured decision.
+8. Validate the requested action.
+9. Execute the appropriate PeTTa tool or skill.
+10. Observe the execution result.
+11. Update the working context.
+12. Process explicitly requested memory operations.
+13. Evaluate task completion.
+14. Continue the loop or return the final answer.
+
+The loop must support:
+- Multiple tool calls.
+- Multiple skill executions.
+- Maximum iterations.
+- Retry limits.
+- Network timeouts.
+- Error recovery.
+- Duplicate-action detection.
+- Cancellation.
+- Clear termination conditions.
+
+## 7. PE TTA TOOL SYSTEM
+
+Build a registry-driven architecture.
+
+Initial mandatory tools:
+
+1. Calculator.
+2. Word counter.
+3. Text analyzer.
+4. String reverser.
+5. Date/time.
+6. Memory search.
+7. Memory save.
+
+Every tool must contain:
+
+- Name.
+- Description.
+- Input definition.
+- Output definition.
+- Validation.
+- PeTTa implementation.
+- Execution result.
+
+Adding a tool must not require rewriting the agent core.
+
+## 8. PE TTA SKILL SYSTEM
+
+Implement reusable skills that orchestrate registered tools.
+
+Initial mandatory skills:
+
+1. Research skill.
+2. Text-processing skill.
+3. Mathematical skill.
+
+Each skill must have:
+
+- Name.
+- Description.
+- Required inputs.
+- Execution plan.
+- Required tools.
+- Completion conditions.
+- Error handling.
+
+Skill definitions and execution must remain in PeTTa.
+
+## 9. ATOMSPACE MEMORY SYSTEM
+
+Implement three memory categories:
+
+- Short-term memory.
+- Long-term memory.
+- Episodic memory.
+
+Required capabilities:
+
+- Explicit remember requests.
+- Memory search and retrieval.
+- Memory updates.
+- Memory deletion.
+- Duplicate detection.
+- Memory identifiers.
+- Metadata.
+- Persistent storage.
+- Restoration after application restart.
+
+Memory representation, operations and orchestration must remain in PeTTa.
+
+Investigate actual PeTTa AtomSpace and MORK capabilities before selecting a persistence implementation.
+
+Do not claim permanent memory unless saving, shutting down, restarting and retrieving the memory has been tested successfully.
+
+## 10. SECURITY AND RELIABILITY
+
+Implement:
+
+- API-key protection.
+- Environment-based configuration.
+- Tool allowlisting.
+- Action validation.
+- Argument validation.
+- Unknown tool rejection.
+- Unknown skill rejection.
+- Invalid response handling.
+- API failure handling.
+- Network timeouts.
+- Limited retries.
+- Infinite-loop prevention.
+- Human approval for sensitive operations.
+- Safe memory deletion.
+
+Treat all LLM-generated decisions as untrusted input.
+
+## 11. DEVELOPMENT MILESTONES
+
+Follow these milestones in order.
+
+### STAGE A: FOUNDATION
+
+Milestone 1: Inspect the existing environment, repository, dependencies, PeTTa installation and project progress.
+
+Milestone 2: Design the final modular Agentic AI architecture and folder structure.
+
+Milestone 3: Verify PeTTa syntax, module loading, Python interoperability and AtomSpace capabilities using minimal working proofs.
+
+### STAGE B: LLM INTEGRATION
+
+Milestone 4: Build the Python LLM bridge and integrate Gemini.
+
+Milestone 5: Add OpenAI, DeepSeek and generic OpenAI-compatible provider adapters.
+
+### STAGE C: AGENT IMPLEMENTATION
+
+Milestone 6: Implement prompt construction and structured LLM decision protocol.
+
+Milestone 7: Implement PeTTa tool registry, validation and dispatcher.
+
+Milestone 8: Implement PeTTa skill registry and execution.
+
+Milestone 9: Implement the complete agent planner and execution loop.
+
+### STAGE D: MEMORY AND RELIABILITY
+
+Milestone 10: Implement short-term, long-term and episodic AtomSpace memory.
+
+Milestone 11: Implement persistent memory and startup restoration.
+
+Milestone 12: Implement error handling, security, execution limits and recovery.
+
+### STAGE E: COMPLETION
+
+Milestone 13: Implement unit, integration and system tests.
+
+Milestone 14: Complete documentation, installation instructions and final demonstration.
+
+Milestone 15: Implement approved bonus features.
+
+## 12. DEVELOPMENT METHODOLOGY
+
+STRICTLY FOLLOW:
+
+Inspect → Understand → Plan → Request Approval → Implement → Test → Audit.
+
+Work on one milestone at a time.
+
+For every milestone:
+
+1. Inspect the relevant files.
+2. Understand existing implementation.
+3. Identify the required changes.
+4. Verify technical assumptions.
+5. Present a detailed implementation plan.
+6. Identify dependencies and risks.
+7. Wait for my explicit approval.
+8. Implement only the approved scope.
+9. Execute relevant tests.
+10. Audit the implementation against requirements.
+11. Report completed, incomplete and failed items.
+
+Do not begin the next milestone until the current milestone has been audited and accepted.
+
+Do not modify unrelated files.
+
+Do not rewrite working architecture without a justified reason.
+
+Do not delete existing work without approval.
+
+Do not install dependencies unnecessarily.
+
+Do not expose API keys or overwrite environment configuration.
+
+## 13. CODE QUALITY
+
+All implementation must be:
+
+- Modular.
+- Reusable.
+- Readable.
+- Documented.
+- Testable.
+- Maintainable.
+- Compatible with the actual installed PeTTa runtime.
+
+Prefer small, focused modules.
+
+Avoid unnecessary abstractions and premature optimization.
+
+Do not generate placeholder implementations and describe them as complete.
+
+Use actual executable code and tests.
+
+## 14. FINAL DELIVERABLES
+
+The final project must include:
+
+1. Complete PeTTa source code.
+2. Functional agent controller and loop.
+3. Python LLM integration.
+4. Multiple provider adapters.
+5. PeTTa tool registry.
+6. PeTTa skill registry.
+7. AtomSpace memory.
+8. Persistent memory.
+9. Automated tests.
+10. Architecture documentation.
+11. Installation instructions.
+12. Environment configuration example.
+13. Demonstration scenarios.
+14. Final testing report.
+
+## 15. BONUS OBJECTIVES
+
+After completing mandatory functionality, investigate:
+
+- Agent execution dashboard using Streamlit.
+- AtomSpace memory explorer.
+- Multi-agent collaboration.
+- Human-in-the-loop approvals.
+- LLM provider benchmarking.
+- Goal decomposition.
+- Execution tracing and observability.
+
+Do not prioritize bonuses over mandatory requirements.
+
+## 16. IMPORTANT CURRENT WORKING MODE
+
+At the beginning, DO NOT IMPLEMENT ANYTHING.
+
+Start with inspection and analysis only.
+
+I want to proceed milestone by milestone.
+
+For the current request, inspect the existing project and report:
+
+1. Current project location.
+2. Current directory structure.
+3. Existing implementation.
+4. Git status and current branch.
+5. Installed dependencies and versions.
+6. Missing dependencies.
+7. Actual PeTTa runtime and repository information.
+8. Verified Python interoperability support.
+9. Available AtomSpace and persistence capabilities.
+10. Existing architecture and technical problems.
+11. Proposed final framework architecture.
+12. Recommended milestone implementation sequence.
+13. Risks, dependencies and recommendations.
+
+Do not create files, modify source code, install packages or change configurations during this initial planning stage.
+
+Wait for my explicit approval before making changes.
+
+Your objective is to help me build a real Agentic AI framework where PeTTa is the actual intelligence orchestration and execution framework, and Python is only the LLM integration layer.
