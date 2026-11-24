@@ -1,0 +1,26 @@
+================================================================================
+PeTTa Agentic AI Framework - Evaluator Scenario C: Clarification and Resumption Flow
+Task: Detecting Ambiguity, Formulating Questions, and Resuming with Context
+Date: 2026-11-24
+Runtime: PeTTa (SWI-Prolog Engine)
+Test Runner: tests/integration/test_scenario_c_clarification.metta
+Execution Mode: Canonical Eight-Action Protocol (ask_user -> answer)
+================================================================================
+
+[Turn 1: Ambiguous User Request]
+- User Query: "Find the best option for my project and calculate the expected cost."
+- Analysis: Request lacks essential parameters (project domain, tech stack, budget constraint).
+- Action Parsed: (action ask_user "Could you please specify your project requirements, domain (e.g. cloud, software, hardware), and your expected budget constraint?")
+- Agent State: Pauses turn execution; emits 'ask_user' event to UI/CLI.
+- Working Memory: Stored AssistantMessage prompt in &conversation.
+
+[Turn 2: User Clarification Input]
+- User Clarification: "My project is a high-availability web service with a $500 monthly budget."
+- Working Memory: Added UserMessage to &conversation.
+- Prompt Context: Both Turn 1 request and Turn 2 clarification incorporated seamlessly.
+
+[Turn 3: Resumed Execution & Answer]
+- Action Parsed: (action answer "With a $500 monthly budget for a high-availability web service, we recommend a multi-zone Kubernetes cluster on Hetzner or DigitalOcean with redundant ingress nodes costing ~$380/month.")
+- Verification: Agent adhered strictly to stated constraints without hallucination or loss of prior goal.
+- Status: COMPLETED ✅
+================================================================================

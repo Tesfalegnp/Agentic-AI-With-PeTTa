@@ -1,0 +1,41 @@
+================================================================================
+PeTTa Agentic AI Framework - Evaluator Scenario B: Multi-Step Dataset Computation
+Task: Dataset Creation, Reading, Sum & Average Calculation, Cleanup
+Date: 2026-11-24
+Runtime: PeTTa (SWI-Prolog Engine)
+Test Runner: tests/integration/test_scenario_b_data_calc.metta
+Execution Mode: System File Tools + Arithmetic Calculator Tool
+================================================================================
+
+[User Query]
+"Analyze this dataset, calculate the totals and averages, identify the highest and lowest values, compare the groups, and produce a concise report with the calculations."
+
+[Turn 1: Writing Dataset to Disk]
+- Action Parsed: (action use_tool write_file ("dataset.csv" "student,score\nalice,85\nbob,90\ncharlie,95"))
+- Dispatcher: Executing write_file_safe
+- Observation: Successfully wrote file: dataset.csv
+
+[Turn 2: Reading Dataset Content]
+- Action Parsed: (action use_tool read_file ("dataset.csv"))
+- Dispatcher: Executing read_file_safe
+- Observation: student,score\nalice,85\nbob,90\ncharlie,95
+
+[Turn 3: Summing Scores]
+- Action Parsed: (action use_tool calculator ("85 + 90 + 95"))
+- Dispatcher: Executing calculator
+- Observation: 270
+
+[Turn 4: Computing Average]
+- Action Parsed: (action use_tool calculator ("270 / 3"))
+- Dispatcher: Executing calculator
+- Observation: 90
+
+[Turn 5: Dataset File Cleanup]
+- Action Parsed: (action use_tool run_command ("rm -f dataset.csv"))
+- Dispatcher: Executing run_command
+- Observation: (Command executed successfully with no stdout output)
+
+[Turn 6: Synthesizing Final Report]
+- Summary: Total: 270 | Average: 90.0 | High: Charlie (95) | Low: Alice (85)
+- Status: COMPLETED ✅
+================================================================================

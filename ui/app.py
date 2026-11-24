@@ -122,29 +122,73 @@ st.markdown("""
 
 
 # =============================================================================
-# QUICK PROMPTS FOR EVALUATOR DEMO
+# EVALUATOR DEMONSTRATIONS (7 MANDATORY SCENARIOS)
 # =============================================================================
-st.markdown("##### 💡 Example Tasks for Evaluation:")
-q_cols = st.columns(3)
+st.markdown("### 🎯 Evaluator Demonstrations (Ready-to-Run)")
+st.caption("Select any evaluator scenario below to preview the exact prompt, inspect agent telemetry, and follow live execution:")
+
+demo_tabs = st.tabs([
+    "1. Simple File Task",
+    "2. Web Research & Calc",
+    "3. Long-Running (20+ Turns)",
+    "4. Clarification Flow",
+    "5. Failure Recovery",
+    "6. Sequential Session",
+    "7. DAG Planning"
+])
+
 quick_query = None
 
-with q_cols[0]:
-    if st.button("🔢 Calculate 45 * 12", use_container_width=True):
-        quick_query = "Calculate 45 multiplied by 12."
-    if st.button("🌍 Capital of France", use_container_width=True):
-        quick_query = "What is the capital of France?"
+with demo_tabs[0]:
+    st.markdown("**Scenario:** Creates a file on disk, reads back its content, and verifies integrity.")
+    p1 = "Write 'PeTTa Agent operational status: verified' to 'status.txt' then read and verify it."
+    st.code(p1, language="text")
+    if st.button("🚀 Run Scenario 1: File Verification", key="btn_s1"):
+        quick_query = p1
 
-with q_cols[1]:
-    if st.button("📋 Multi-step Text Workflow", use_container_width=True):
-        quick_query = "Create a multi-step workflow to analyze a piece of text."
-    if st.button("📊 Text Metrics Analysis", use_container_width=True):
-        quick_query = "Analyze this text and provide its word count and sentiment-style summary."
+with demo_tabs[1]:
+    st.markdown("**Scenario:** Searches current laptop options, compares specs, and calculates total price with tax.")
+    p2 = "Research three current options for a suitable laptop for a CS student, compare their prices and specs, and calculate total price with 10% tax."
+    st.code(p2, language="text")
+    if st.button("🚀 Run Scenario 2: Web Research & Calculation", key="btn_s2"):
+        quick_query = p2
 
-with q_cols[2]:
-    if st.button("💾 Remember Preference", use_container_width=True):
-        quick_query = "Remember that I prefer concise explanations."
-    if st.button("🔍 Recall Stored Preferences", use_container_width=True):
-        quick_query = "What user preferences do you have stored in memory?"
+with demo_tabs[2]:
+    st.markdown("**Scenario:** Executes a 22-turn continuous recursive computation chain while preserving working memory context.")
+    p3 = "Execute a continuous 22-step iterative calculation pipeline incrementing an accumulator and recording each turn."
+    st.code(p3, language="text")
+    if st.button("🚀 Run Scenario 3: 20+ Turn Execution", key="btn_s3"):
+        quick_query = p3
+
+with demo_tabs[3]:
+    st.markdown("**Scenario:** Intentionally ambiguous request where the agent detects missing information and pauses to ask for clarification.")
+    p4 = "Find the best option for my project and calculate the expected cost."
+    st.code(p4, language="text")
+    if st.button("🚀 Run Scenario 4: Clarification Flow", key="btn_s4"):
+        quick_query = p4
+
+with demo_tabs[4]:
+    st.markdown("**Scenario:** Attempts a forbidden operation (or division by zero) and demonstrates graceful failure observation and recovery.")
+    p5 = "Calculate 100 divided by 0, and if that fails, calculate 100 divided by 4 instead."
+    st.code(p5, language="text")
+    if st.button("🚀 Run Scenario 5: Failure Recovery", key="btn_s5"):
+        quick_query = p5
+
+with demo_tabs[5]:
+    st.markdown("**Scenario:** Sequential execution of multiple distinct tasks in one session without restarting the agent process.")
+    p6 = "Remember that I prefer python, then calculate 50 * 12, then read the project license file."
+    st.code(p6, language="text")
+    if st.button("🚀 Run Scenario 6: Sequential Multi-Task", key="btn_s6"):
+        quick_query = p6
+
+with demo_tabs[6]:
+    st.markdown("**Scenario:** Decomposes complex request into a dependency-aware Directed Acyclic Graph (DAG) with visual task transitions.")
+    p7 = "Create a multi-step workflow to analyze the text 'PeTTa combines formal symbolic reasoning with neural language models', count its words, and compute the square of that count."
+    st.code(p7, language="text")
+    if st.button("🚀 Run Scenario 7: DAG Planning", key="btn_s7"):
+        quick_query = p7
+
+st.markdown("---")
 
 
 # =============================================================================

@@ -270,7 +270,8 @@ class PeTTAAgentClient:
             {"name": "read_file", "description": "Reads text content from file safely", "category": "system"},
             {"name": "write_file", "description": "Writes text content to file safely", "category": "system"},
             {"name": "run_command", "description": "Runs shell command with timeout and safety checks", "category": "system"},
-            {"name": "send_message", "description": "Sends unbuffered direct message to user", "category": "system"}
+            {"name": "send_message", "description": "Sends unbuffered direct message to user", "category": "system"},
+            {"name": "web_search", "description": "Searches the web for current facts, options, and documentation", "category": "research"}
         ]
 
         skills = [

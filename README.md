@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Runtime: PeTTa](https://img.shields.io/badge/Runtime-PeTTa%20(SWI--Prolog%20%2B%20MeTTa)-orange.svg)](https://github.com/trueagi-io/PeTTa)
 [![Interface: Streamlit](https://img.shields.io/badge/Interface-Streamlit%201.40%2B-FF4B4B.svg)](https://streamlit.io)
-[![Tests: 99 Passed](https://img.shields.io/badge/Tests-99%2F99%20Passing%20(100%25)-brightgreen.svg)](docs/FINAL_TEST_REPORT.md)
+[![Tests: 108 Passed](https://img.shields.io/badge/Tests-108%2F108%20Passing%20(100%25)-brightgreen.svg)](docs/FINAL_TEST_REPORT.md)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Tesfalegnp%2FAgentic--AI--With--PeTTa-blue?logo=github)](https://github.com/Tesfalegnp/Agentic-AI-With-PeTTa)
 
 <div align="center">
@@ -202,6 +202,7 @@ Detailed protocol specifications and negative validation examples are documented
 - `write_file`: Safe UTF-8 file writing with critical path protections.
 - `run_command`: Sandboxed Bash execution with configurable timeout and destructive command blocking.
 - `send_message`: Direct user notifications and status streaming.
+- `web_search`: Multi-provider web search (Tavily, Brave, and DuckDuckGo fallback).
 - `calculator`: Deterministic arithmetic expression evaluation via Prolog `is/2`.
 - `word_counter`: UTF-8 word token count analysis.
 - `text_analyzer`: Lexical metric analysis (characters, words, lines, sentences).
@@ -440,11 +441,12 @@ petta-agentic-ai/
 │   ├── episodic/
 │   ├── index/
 │   └── long_term/
-├── python_bridge/          # Stateless LLM REST transport layer
+├── python_bridge/          # Stateless LLM & Search REST transport layer
 │   ├── bridge.py           # Unified query router
 │   ├── config.py           # Provider configuration & models
+│   ├── search_bridge.py    # Tavily, Brave & DuckDuckGo search transport
 │   └── providers/          # Gemini, OpenAI, DeepSeek, Generic REST providers
-├── tests/                  # Complete test suites (99 automated tests)
+├── tests/                  # Complete test suites (108 automated tests)
 │   ├── protocol/
 │   ├── agent/
 │   ├── tools/

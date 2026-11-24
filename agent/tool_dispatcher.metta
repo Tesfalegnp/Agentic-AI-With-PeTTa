@@ -18,6 +18,7 @@
 !(import! &self "../tools/builtin/write_file.metta")
 !(import! &self "../tools/builtin/run_command.metta")
 !(import! &self "../tools/builtin/send_message.metta")
+!(import! &self "../tools/builtin/web_search.metta")
 
 ;; Dispatches a validated tool call to its PeTTa implementation
 (= (dispatch-tool-internal $tool $args)
@@ -31,6 +32,7 @@
       (write_file (run-write-file $args))
       (run_command (run-run-command $args))
       (send_message (run-send-message $args))
+      (web_search (run-web-search $args))
       ($_ (make-tool-failure $tool "Unimplemented tool binding.")))))
 
 ;; Public Dispatcher Entry Point

@@ -98,7 +98,11 @@ Example 6 (Sending Direct Message):
 User: Notify the user that processing has started.
 Response: (action use_tool send_message (\"Processing has started successfully.\"))
 
-Example 7 (Multi-Step Skill Invocation):
+Example 7 (Web Research):
+User: Search current documentation for SWI-Prolog Janus bridge.
+Response: (action use_tool web_search (\"SWI-Prolog Janus bridge\"))
+
+Example 8 (Multi-Step Skill Invocation):
 User: Use your math skill to calculate 125 * 8.
 Response: (action use_skill math_skill (\"125 * 8\"))
 

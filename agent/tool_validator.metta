@@ -65,4 +65,10 @@
                  ((($msg) (ToolValidationSuccess send_message $args))
                   ($_ (ToolValidationFailure send_message "send_message requires exactly 1 message argument.")))))
 
+              (web_search
+               (case $args
+                 ((($q) (ToolValidationSuccess web_search $args))
+                  (($q $n) (ToolValidationSuccess web_search $args))
+                  ($_ (ToolValidationFailure web_search "web_search requires a query string and optional max_results count.")))))
+
               ($_ (ToolValidationFailure $tool "No validation rule for registered tool.")))))))

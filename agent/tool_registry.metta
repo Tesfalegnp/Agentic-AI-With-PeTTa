@@ -119,7 +119,13 @@
                     ((message string required "Message content to send to user"))
                     string
                     true)
-     (RegistryInitialized 9)))
+     (register-tool web_search
+                    "Searches the web for current facts, research options, and technical documentation."
+                    ((query string required "Search query string")
+                     (max_results number optional "Maximum results to retrieve (1-5)"))
+                    string
+                    true)
+     (RegistryInitialized 10)))
 
 ;; Auto-initialize standard registry
 !(init-builtin-tools)
