@@ -6,6 +6,10 @@
 [![Tests: 89 Passed](https://img.shields.io/badge/Tests-89%2F89%20Passing%20(100%25)-brightgreen.svg)](docs/TESTING_AND_VERIFICATION.md)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Tesfalegnp%2FAgentic--AI--With--PeTTa-blue?logo=github)](https://github.com/Tesfalegnp/Agentic-AI-With-PeTTa)
 
+<div align="center">
+  <img src="asset/Agentic-AI.gif" alt="PeTTa Agentic AI Autonomous Architecture" width="100%" style="border-radius: 12px; margin: 15px 0;" />
+</div>
+
 > **A robust, modular, and extensible Agentic AI framework combining the formal symbolic reasoning, pattern-matching, and knowledge representation of PeTTa (Prolog-enhanced MeTTa) with neural Large Language Model orchestration.**
 
 ---
@@ -236,6 +240,11 @@ When complex multi-step requests are received (e.g., containing workflows, pipel
 4. **Execution:** Resolves inter-task bindings (`$T1.output`) and executes tasks in sequence.
 5. **Verification & Recovery:** Inspects task outcomes; executes alternate recovery steps if tasks fail.
 
+<div align="center">
+  <img src="asset/sample_task_with_multiple_step.png" alt="Multi-Step Task Execution & Visual Plan Cards" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 15px; margin-bottom: 15px;" />
+  <p><em>Figure: Real-time Multi-Step Task Decomposition & Visual Plan DAG Execution with live status transitions.</em></p>
+</div>
+
 ---
 
 ## 13. Adaptive Learning & Feedback
@@ -257,6 +266,16 @@ The modern web interface (`ui/app.py`) provides:
 - **Visual Task Cards:** Dynamic cards displaying real-time task states (⏳ `PENDING` -> ⚡ `RUNNING` -> ✅ `COMPLETED` -> ❌ `FAILED`).
 - **Interactive Feedback Controls:** Built-in 👍 / 👎 buttons routing feedback directly to the adaptation engine.
 - **High-Contrast Architecture:** Dedicated CSS rules ([ui/styles.py](ui/styles.py)) ensuring crisp readability in both light and dark modes.
+
+<div align="center">
+  <img src="asset/hero_home_page.png" alt="PeTTa Agentic AI Web Interface Homepage" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 15px; margin-bottom: 10px;" />
+  <p><em>Figure 1: PeTTa Agentic AI Web Interface — Interactive Chat, Telemetry Feed, and Evaluation Quick Prompts.</em></p>
+</div>
+
+<div align="center">
+  <img src="asset/tools_sidebare_image.png" alt="Evaluator Sidebar & Subsystem Status" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 15px; margin-bottom: 10px;" />
+  <p><em>Figure 2: Evaluator Sidebar — Subsystem Status, Registered Tools & Skills, and Architecture Transparency.</em></p>
+</div>
 
 ---
 
@@ -389,6 +408,11 @@ petta-agentic-ai/
 │   ├── telemetry_io.pl     # SWI-Prolog unbuffered JSONL telemetry & safe IPC
 │   ├── tool_registry.metta # Tool engine & validation
 │   └── ui_gateway.metta    # Headless turn entry point for Web UI
+├── asset/                  # Architectural diagrams, animations, and UI screenshots
+│   ├── Agentic-AI.gif
+│   ├── hero_home_page.png
+│   ├── sample_task_with_multiple_step.png
+│   └── tools_sidebare_image.png
 ├── docs/                   # Complete professional documentation
 │   ├── ARCHITECTURE.md     # Full system architecture & Mermaid diagrams
 │   ├── AGENT_PROTOCOL.md   # Eight canonical actions & validation specification
