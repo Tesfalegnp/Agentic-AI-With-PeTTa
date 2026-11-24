@@ -386,6 +386,8 @@ The web interface features 5 one-click demonstration scenarios:
 
 Detailed evaluator walkthroughs are documented in [docs/EVALUATOR_GUIDE.md](docs/EVALUATOR_GUIDE.md).
 
+For a comprehensive executive overview of the system architecture, design decisions, and evaluation results, refer to the [Executive Project Summary Document (DOCX)](docs/Agentic_AI_With_PeTTa_Summary.docx).
+
 ---
 
 ## 22. Project Directory Structure
@@ -414,6 +416,7 @@ petta-agentic-ai/
 │   ├── sample_task_with_multiple_step.png
 │   └── tools_sidebare_image.png
 ├── docs/                   # Complete professional documentation
+│   ├── Agentic_AI_With_PeTTa_Summary.docx # Executive project summary report
 │   ├── ARCHITECTURE.md     # Full system architecture & Mermaid diagrams
 │   ├── AGENT_PROTOCOL.md   # Eight canonical actions & validation specification
 │   ├── SETUP_AND_CONFIGURATION.md # Installation & configuration guide
