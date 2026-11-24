@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Runtime: PeTTa](https://img.shields.io/badge/Runtime-PeTTa%20(SWI--Prolog%20%2B%20MeTTa)-orange.svg)](https://github.com/trueagi-io/PeTTa)
 [![Interface: Streamlit](https://img.shields.io/badge/Interface-Streamlit%201.40%2B-FF4B4B.svg)](https://streamlit.io)
-[![Tests: 108 Passed](https://img.shields.io/badge/Tests-108%2F108%20Passing%20(100%25)-brightgreen.svg)](docs/FINAL_TEST_REPORT.md)
+[![Tests: 108 Passed](https://img.shields.io/badge/Tests-108%2F108%20Passing%20(100%25)-brightgreen.svg)](docs/EVALUATION_REPORT.md)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Tesfalegnp%2FAgentic--AI--With--PeTTa-blue?logo=github)](https://github.com/Tesfalegnp/Agentic-AI-With-PeTTa)
 
 <div align="center">
@@ -58,11 +58,16 @@ The system operates across three decoupled layers:
 
 ## 5. Architecture Diagram
 
+<div align="center">
+  <img src="asset/archeture_graph.png" alt="PeTTa Agentic AI System Architecture & Task Flow" width="100%" style="border-radius: 10px; border: 1px solid #ddd; margin: 15px 0;" />
+  <p><em>Figure 1: Complete Neuro-Symbolic System Architecture and Multi-Step Task Flow Specification.</em></p>
+</div>
+
 ```mermaid
 flowchart TD
     subgraph Presentation_Layer ["Presentation Layer (Python / Streamlit)"]
         User(["User / Academic Evaluator"])
-        WebUI["Streamlit Web UI (ui/app.py)"]
+        WebUI["Streamlit Web UI (ui/app.py)<br/>• 7 Evaluator Demonstrations"]
         CLI["Terminal Interface (main.metta)"]
         ClientAdapter["Client Adapter (ui/agent_client.py)"]
     end
@@ -389,7 +394,7 @@ The web interface features 5 one-click demonstration scenarios:
 4. **Goal Decomposition & DAG Scheduling:** `"Create a multi-step workflow to analyze the words in '...' and calculate the square of that count."` — demonstrates real-time Visual Task Cards (`PENDING` -> `RUNNING` -> `COMPLETED`).
 5. **Adaptive Self-Improvement:** Submit 👎 feedback on an answer — demonstrates feedback recording in `&feedback_space` and dynamic rule synthesis.
 
-Detailed evaluator walkthroughs are documented in [docs/EVALUATOR_GUIDE.md](docs/EVALUATOR_GUIDE.md).
+Detailed evaluator walkthroughs are documented in [docs/EVALUATION_REPORT.md](docs/EVALUATION_REPORT.md). For detailed architectural specifications and component designs, see [docs/SYSTEM_ARCHITECTURE.md](docs/SYSTEM_ARCHITECTURE.md).
 
 For a comprehensive executive overview of the system architecture, design decisions, and evaluation results, refer to the [Executive Project Summary Document (DOCX)](docs/Agentic_AI_With_PeTTa_Summary.docx).
 
@@ -416,24 +421,15 @@ petta-agentic-ai/
 │   ├── tool_registry.metta # Tool engine & validation
 │   └── ui_gateway.metta    # Headless turn entry point for Web UI
 ├── asset/                  # Architectural diagrams, animations, and UI screenshots
-│   ├── Agentic-AI.gif
-│   ├── hero_home_page.png
-│   ├── sample_task_with_multiple_step.png
-│   └── tools_sidebare_image.png
-├── docs/                   # Complete professional documentation
+│   ├── Agentic-AI.gif      # System cognitive cycle animation
+│   ├── archeture_graph.png # Full system architecture & task flow poster
+│   ├── hero_home_page.png  # Web UI evaluator dashboard
+│   ├── sample_task_with_multiple_step.png # Real-time DAG execution cards
+│   └── tools_sidebare_image.png # Sidebar tool inspection & evaluation scenarios
+├── docs/                   # Consolidated essential documentation
 │   ├── Agentic_AI_With_PeTTa_Summary.docx # Executive project summary report
-│   ├── ARCHITECTURE.md     # Full system architecture & Mermaid diagrams
-│   ├── AGENT_PROTOCOL.md   # Eight canonical actions & validation specification
-│   ├── FINAL_ARCHITECTURE.md # Verified system architecture & Mermaid models
-│   ├── FINAL_REQUIREMENTS_AUDIT.md # Comprehensive assignment audit & gap matrix
-│   ├── FINAL_TEST_REPORT.md # Ground-truth test verification report (99 tests)
-│   ├── SETUP_AND_CONFIGURATION.md # Installation & configuration guide
-│   ├── TESTING_AND_VERIFICATION.md # Test catalog & baseline report
-│   ├── EVALUATOR_GUIDE.md  # Demonstration scenarios for academic evaluators
-│   ├── STAGE_E_AUDIT.md    # Pre-release audit & component inventory
-│   ├── STAGE_E_CLEANUP.md  # Record of obsolete prototype cleanup
-│   ├── milestones/         # Historical milestone reports (Milestones 8–13)
-│   └── reference/          # Reference documents
+│   ├── SYSTEM_ARCHITECTURE.md # Unified system architecture & specification
+│   └── EVALUATION_REPORT.md   # Complete evaluator guide & test report (108 tests)
 ├── logs/                   # Reproducible completed task logs
 │   └── submission/         # Evaluation evidence (Simple, Multi-step, Long, Multi-task)
 ├── memory/                 # Runtime persistence directories (.gitkeep tracked)
