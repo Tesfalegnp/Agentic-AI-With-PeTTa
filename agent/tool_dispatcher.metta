@@ -14,6 +14,10 @@
 !(import! &self "../tools/builtin/text_analyzer.metta")
 !(import! &self "../tools/builtin/string_reverser.metta")
 !(import! &self "../tools/builtin/datetime.metta")
+!(import! &self "../tools/builtin/read_file.metta")
+!(import! &self "../tools/builtin/write_file.metta")
+!(import! &self "../tools/builtin/run_command.metta")
+!(import! &self "../tools/builtin/send_message.metta")
 
 ;; Dispatches a validated tool call to its PeTTa implementation
 (= (dispatch-tool-internal $tool $args)
@@ -23,6 +27,10 @@
       (text_analyzer (run-text-analyzer $args))
       (string_reverser (run-string-reverser $args))
       (datetime (run-datetime $args))
+      (read_file (run-read-file $args))
+      (write_file (run-write-file $args))
+      (run_command (run-run-command $args))
+      (send_message (run-send-message $args))
       ($_ (make-tool-failure $tool "Unimplemented tool binding.")))))
 
 ;; Public Dispatcher Entry Point

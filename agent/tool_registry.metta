@@ -96,7 +96,30 @@
                     ()
                     string
                     true)
-     (RegistryInitialized 5)))
+     (register-tool read_file
+                    "Reads the text content of a file from disk."
+                    ((file_path string required "Path to the file to read"))
+                    string
+                    true)
+     (register-tool write_file
+                    "Writes text content to a file on disk safely."
+                    ((file_path string required "Path to write")
+                     (content string required "Text content to write"))
+                    string
+                    true)
+     (register-tool run_command
+                    "Executes a bash shell command with safe timeout and approval checks."
+                    ((command string required "Shell command to execute")
+                     (timeout number optional "Timeout in seconds (default 10)")
+                     (approved boolean optional "Set true to approve destructive operations"))
+                    string
+                    true)
+     (register-tool send_message
+                    "Sends an unbuffered direct message or status notification to the user."
+                    ((message string required "Message content to send to user"))
+                    string
+                    true)
+     (RegistryInitialized 9)))
 
 ;; Auto-initialize standard registry
 !(init-builtin-tools)

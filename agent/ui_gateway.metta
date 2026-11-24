@@ -64,7 +64,7 @@
          (println! "Gateway: Empty query."))
        (progn
          (emit-telemetry "request_received" "init" "User request received by PeTTa runtime" $query)
-         (let $res (run-cognitive-cycle "default" $query 5)
+         (let $res (run-cognitive-cycle "default" $query 25)
            (process-gateway-result $res))
          (state-save-session)
          (memory-shutdown)

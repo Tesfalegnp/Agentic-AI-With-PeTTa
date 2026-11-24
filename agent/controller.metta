@@ -17,7 +17,7 @@
 
 ;; Dispatch and format agent response
 (= (handle-user-query $query)
-   (let $res (run-cognitive-cycle "default" $query 5)
+   (let $res (run-cognitive-cycle "default" $query 25)
      (case $res
        (((AgentResult answer $ans)
          (println! (string_concat "\nAgent: " $ans)))

@@ -82,7 +82,23 @@ Example 2 (Direct Tool Call):
 User: Calculate 25 * 4.
 Response: (action use_tool calculator (\"25 * 4\"))
 
-Example 3 (Multi-Step Skill Invocation):
+Example 3 (File Reading Tool Call):
+User: Read the project README file.
+Response: (action use_tool read_file (\"README.md\"))
+
+Example 4 (File Writing Tool Call):
+User: Write 'Hello world' to output.txt.
+Response: (action use_tool write_file (\"output.txt\" \"Hello world\"))
+
+Example 5 (Shell Command Execution):
+User: List the files in the current directory.
+Response: (action use_tool run_command (\"ls -la\"))
+
+Example 6 (Sending Direct Message):
+User: Notify the user that processing has started.
+Response: (action use_tool send_message (\"Processing has started successfully.\"))
+
+Example 7 (Multi-Step Skill Invocation):
 User: Use your math skill to calculate 125 * 8.
 Response: (action use_skill math_skill (\"125 * 8\"))
 

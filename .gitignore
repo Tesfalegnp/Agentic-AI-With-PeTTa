@@ -47,6 +47,7 @@ memory/index/*.data
 
 # 7. Ephemeral Logs & Dumps
 *.log
+!logs/submission/*.log
 *.tmp
 *.dump
 *.metta.dump

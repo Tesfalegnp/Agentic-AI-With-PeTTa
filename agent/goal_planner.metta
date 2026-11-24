@@ -62,7 +62,7 @@ Syntax:
 Rules:
 1. Task IDs must be sequential tokens: t1, t2, t3, etc.
 2. Executor must be 'tool' or 'skill'.
-3. Use only registered tools: calculator, word_counter, text_analyzer, string_reverser, datetime.
+3. Use only registered tools: calculator, word_counter, text_analyzer, string_reverser, datetime, read_file, write_file, run_command, send_message.
 4. Use only registered skills: math_skill, text_process_skill, research_skill.
 5. Task dependencies (<dep1> ...) must refer to prior task IDs in the plan (e.g. () for no dependencies, (t1) to depend on t1).
 6. Arguments must be a list of values, NOT key-value pairs. e.g. (\"some text\") or (\"50 * 4\") or ((ref t1)).

@@ -119,4 +119,4 @@
 (= (execute-plan $plan_id)
    (progn
      (plan-update-status $plan_id executing)
-     (execute-plan-loop $plan_id 1 15)))
+     (execute-plan-loop $plan_id 1 30)))

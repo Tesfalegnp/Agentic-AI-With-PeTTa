@@ -43,4 +43,26 @@
                   (($opt) (ToolValidationSuccess datetime ()))
                   ($_ (ToolValidationFailure datetime "DateTime takes at most 1 optional argument.")))))
 
+              (read_file
+               (case $args
+                 ((($path) (ToolValidationSuccess read_file $args))
+                  ($_ (ToolValidationFailure read_file "read_file requires exactly 1 file_path argument.")))))
+
+              (write_file
+               (case $args
+                 ((($path $content) (ToolValidationSuccess write_file $args))
+                  ($_ (ToolValidationFailure write_file "write_file requires exactly 2 arguments: file_path and content.")))))
+
+              (run_command
+               (case $args
+                 ((($cmd) (ToolValidationSuccess run_command $args))
+                  (($cmd $timeout) (ToolValidationSuccess run_command $args))
+                  (($cmd $timeout $appr) (ToolValidationSuccess run_command $args))
+                  ($_ (ToolValidationFailure run_command "run_command requires command string and optional timeout/approval flags.")))))
+
+              (send_message
+               (case $args
+                 ((($msg) (ToolValidationSuccess send_message $args))
+                  ($_ (ToolValidationFailure send_message "send_message requires exactly 1 message argument.")))))
+
               ($_ (ToolValidationFailure $tool "No validation rule for registered tool.")))))))

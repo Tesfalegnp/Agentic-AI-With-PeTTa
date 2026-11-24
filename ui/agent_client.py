@@ -266,7 +266,11 @@ class PeTTAAgentClient:
             {"name": "word_counter", "description": "Counts words and tokens in text", "category": "text"},
             {"name": "text_analyzer", "description": "Computes readability and structural metrics", "category": "text"},
             {"name": "string_reverser", "description": "Reverses strings character-by-character", "category": "text"},
-            {"name": "datetime", "description": "Retrieves current system UTC/local time", "category": "system"}
+            {"name": "datetime", "description": "Retrieves current system UTC/local time", "category": "system"},
+            {"name": "read_file", "description": "Reads text content from file safely", "category": "system"},
+            {"name": "write_file", "description": "Writes text content to file safely", "category": "system"},
+            {"name": "run_command", "description": "Runs shell command with timeout and safety checks", "category": "system"},
+            {"name": "send_message", "description": "Sends unbuffered direct message to user", "category": "system"}
         ]
 
         skills = [
