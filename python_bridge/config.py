@@ -32,7 +32,7 @@ class LLMConfig:
     # Generic OpenAI-Compatible
     generic_api_key: str = ""
     generic_base_url: str = ""
-    generic_model: str = "default-model"
+    generic_model: str = "qwen/qwen3.8-27b"
     
     # Common settings
     llm_provider: str = "gemini"
@@ -90,7 +90,7 @@ def load_config(env_path: Optional[Path] = None) -> LLMConfig:
     # Generic settings
     generic_key = os.environ.get("GENERIC_API_KEY", "").strip()
     generic_url = os.environ.get("GENERIC_BASE_URL", "").strip()
-    generic_model = os.environ.get("GENERIC_MODEL", "default-model").strip()
+    generic_model = os.environ.get("GENERIC_MODEL", "qwen/qwen3.8-27b").strip()
 
     return LLMConfig(
         gemini_api_key=gemini_key,
@@ -102,7 +102,7 @@ def load_config(env_path: Optional[Path] = None) -> LLMConfig:
         deepseek_model=deepseek_model if deepseek_model else "deepseek-chat",
         generic_api_key=generic_key,
         generic_base_url=generic_url,
-        generic_model=generic_model if generic_model else "default-model",
+        generic_model=generic_model if generic_model else "qwen/qwen3.8-27b",
         llm_provider=provider if provider else "gemini",
         llm_timeout=timeout,
         llm_max_retries=max_retries

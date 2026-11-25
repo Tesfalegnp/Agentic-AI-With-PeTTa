@@ -121,12 +121,24 @@ with st.sidebar:
             key="sb_key_input"
         )
 
+        # For generic_openai, allow customizing Base URL and Model name directly
+        generic_url_val = os.environ.get("GENERIC_BASE_URL", "https://api.groq.com/openai/v1")
+        generic_model_val = os.environ.get("GENERIC_MODEL", "qwen/qwen3.8-27b")
+        if selected_provider == "generic_openai":
+            generic_url_input = st.text_input("Generic Base URL", value=generic_url_val, key="sb_generic_url")
+            generic_model_input = st.text_input("Generic Model Name", value=generic_model_val, key="sb_generic_model")
+
         col_save, col_clear = st.columns(2)
         with col_save:
-            if st.button("💾 Apply Key", use_container_width=True, type="primary"):
+            if st.button("💾 Apply Settings", use_container_width=True, type="primary"):
                 os.environ["LLM_PROVIDER"] = selected_provider
                 if new_key_input.strip():
                     os.environ[key_env_var] = new_key_input.strip()
+                if selected_provider == "generic_openai":
+                    if generic_url_input.strip():
+                        os.environ["GENERIC_BASE_URL"] = generic_url_input.strip()
+                    if generic_model_input.strip():
+                        os.environ["GENERIC_MODEL"] = generic_model_input.strip()
                 st.success(f"Applied {selected_provider.upper()}!")
                 st.rerun()
         with col_clear:
