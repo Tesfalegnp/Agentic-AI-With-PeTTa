@@ -313,7 +313,7 @@ with st.expander("🎯 Evaluator Demonstrations — Click to Load & Run", expand
         },
         {
             "label": "2. Long Task (20+ Turns)",
-            "query": "Execute an iterative accumulation pipeline: start with accumulator=0, increment by 1 each turn using the calculator tool, store each intermediate result, and report the final value.",
+            "query": "Execute an iterative accumulation pipeline for 22 turns: start with accumulator=0, increment by 1 each turn using the calculator tool, store each intermediate result, and report the final value.",
             "desc": "Tests 22+ agent turns, context budget, goal preservation."
         },
         {
@@ -387,13 +387,25 @@ for msg in st.session_state.messages:
                 "turn_limit": "#f59e0b",
                 "failed": "#ef4444",
                 "blocked": "#3b82f6",
+                "awaiting_clarification": "#0ea5e9",
+                "approval_required": "#f59e0b",
                 "partial": "#8b5cf6"
+            }
+            status_labels = {
+                "awaiting_clarification": "💬 AWAITING CLARIFICATION",
+                "approval_required": "🔒 APPROVAL REQUIRED",
+                "completed": "COMPLETED",
+                "turn_limit": "TURN LIMIT",
+                "failed": "FAILED",
+                "blocked": "PAUSED",
+                "partial": "PARTIAL"
             }
             if completion_status:
                 sc = status_colors.get(completion_status, "#64748b")
+                lbl = status_labels.get(completion_status, completion_status.upper())
                 st.markdown(
-                    f'<span style="background:{sc};color:white;padding:2px 8px;border-radius:4px;font-size:0.75rem;font-weight:600;">'
-                    f'{completion_status.upper()}</span>',
+                    f'<span style="background:{sc};color:white;padding:3px 10px;border-radius:6px;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;">'
+                    f'{lbl}</span>',
                     unsafe_allow_html=True
                 )
 
@@ -512,11 +524,35 @@ def event_to_stage(ev: AgentEvent) -> int:
 # ==============================================================================
 # CHAT INPUT & EXECUTION HANDLER
 # ==============================================================================
+clarification_input = None
+if st.session_state.awaiting_clarification:
+    st.markdown(f"""
+    <div style="background:#0f2b48;border:2px solid #38bdf8;border-radius:10px;padding:1.2rem;margin:1rem 0;">
+      <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+        <span style="font-size:1.3rem;">💬</span>
+        <h4 style="color:#f0f9ff;margin:0;font-size:1.1rem;">Clarification Required to Proceed</h4>
+      </div>
+      <p style="color:#bae6fd;margin:0 0 0.8rem;font-size:0.95rem;">
+        <strong>Agent asks:</strong> {st.session_state.clarification_question}
+      </p>
+      <p style="color:#94a3b8;margin:0;font-size:0.8rem;">
+        ℹ️ The task is paused and its active goal is preserved. Provide your answer below to resume execution.
+      </p>
+    </div>
+    """, unsafe_allow_html=True)
+    with st.form("clarification_form", clear_on_submit=True):
+        ans_text = st.text_input("Your clarification response:", placeholder="e.g. Use the file /tmp/dataset.txt", key="form_ans")
+        submitted = st.form_submit_button("▶ Submit & Resume Task", type="primary", use_container_width=True)
+        if submitted and ans_text.strip():
+            clarification_input = ans_text.strip()
+
 user_query = st.chat_input(
-    "Ask a question, run a task, or type your clarification answer..." if not st.session_state.awaiting_clarification
-    else f"Answer for the agent: {st.session_state.clarification_question[:80]}..."
+    "Ask a question or enter a task..." if not st.session_state.awaiting_clarification
+    else "Type your clarification answer here and press Enter..."
 )
-if quick_query and not user_query:
+if clarification_input:
+    user_query = clarification_input
+elif quick_query and not user_query:
     user_query = quick_query
 
 if user_query:
@@ -609,7 +645,7 @@ if user_query:
                     state="error", expanded=True
                 )
             elif action == "ask_user":
-                completion_status = "blocked"
+                completion_status = "awaiting_clarification"
                 st.session_state.awaiting_clarification = True
                 st.session_state.clarification_question = final_content
                 status_box.update(
@@ -628,7 +664,7 @@ if user_query:
 
             # Detect approval required from content
             if "APPROVAL_REQUIRED" in final_content:
-                completion_status = "blocked"
+                completion_status = "approval_required"
                 # Parse command from content
                 lines_c = final_content.split("\n")
                 cmd_line = next((l for l in lines_c if "Command:" in l), "")

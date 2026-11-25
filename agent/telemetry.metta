@@ -58,6 +58,18 @@
          (progn
            (add-atom &conversation (AssistantMessage $a))
            (restore-conversation-records $rest)))
+        ((ClarificationState awaiting $q)
+         (progn
+           (add-atom &conversation (ClarificationState awaiting $q))
+           (restore-conversation-records $rest)))
+        ((PendingGoal $g)
+         (progn
+           (add-atom &conversation (PendingGoal $g))
+           (restore-conversation-records $rest)))
+        ((PendingPlan $p)
+         (progn
+           (add-atom &conversation (PendingPlan $p))
+           (restore-conversation-records $rest)))
         ($_ (restore-conversation-records $rest))))))
 
 ;; Load conversation state from session file into &conversation

@@ -131,6 +131,15 @@ write_conversation_records(Stream, [Record|Rest]) :-
     ;   Record = ['AssistantMessage', Msg]
     ->  clean_msg_for_tsv(Msg, CleanMsg),
         format(Stream, "assistant\t~w~n", [CleanMsg])
+    ;   Record = ['ClarificationState', 'awaiting', Q]
+    ->  clean_msg_for_tsv(Q, CleanQ),
+        format(Stream, "clarification\t~w~n", [CleanQ])
+    ;   Record = ['PendingGoal', G]
+    ->  clean_msg_for_tsv(G, CleanG),
+        format(Stream, "pending_goal\t~w~n", [CleanG])
+    ;   Record = ['PendingPlan', P]
+    ->  clean_msg_for_tsv(P, CleanP),
+        format(Stream, "pending_plan\t~w~n", [CleanP])
     ;   true
     ),
     write_conversation_records(Stream, Rest).
@@ -161,6 +170,12 @@ parse_conv_lines([Line|Rest], Records) :-
         ->  Records = [['UserMessage', Msg]|More]
         ;   Role == "assistant"
         ->  Records = [['AssistantMessage', Msg]|More]
+        ;   Role == "clarification"
+        ->  Records = [['ClarificationState', 'awaiting', Msg]|More]
+        ;   Role == "pending_goal"
+        ->  Records = [['PendingGoal', Msg]|More]
+        ;   Role == "pending_plan"
+        ->  Records = [['PendingPlan', Msg]|More]
         ;   Records = More
         ),
         parse_conv_lines(Rest, More)
