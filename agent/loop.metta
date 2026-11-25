@@ -40,12 +40,12 @@
            (string_concat "Task incomplete: Maximum reasoning turns (" (string_concat (repr $max_iterations)
              ") reached. The original goal was preserved throughout but could not be completed within the turn budget."))))
        (let* (($_ev_step (emit-telemetry "cognitive_step" "reasoning"
-                            (string_concat "Turn " (repr $iteration) " of " (repr $max_iterations)) ""))
+                            (string_concat "Turn " (string_concat (repr $iteration) (string_concat " of " (repr $max_iterations)))) ""))
               ;; Build fresh prompt every turn — context budget enforced per turn
               ($ctx     (state-get-context))
-              ($prompt  (build-agent-prompt-with-goal $ctx $original_goal))
+              ($prompt  (build-agent-prompt $ctx $original_goal))
               ($_ev_llm  (emit-telemetry "llm_query" "llm"
-                            (string_concat "Querying " $provider " (Turn " (repr $iteration) ")") ""))
+                            (string_concat "Querying " (string_concat $provider (string_concat " (Turn " (string_concat (repr $iteration) ")")))) ""))
               ($raw_json (py-call (bridge.query $provider $prompt)))
               ($success  (py-call (bridge.get_field $raw_json "success")))
               ($raw_text (py-call (bridge.get_field $raw_json "content")))
@@ -172,7 +172,7 @@
                   ((ActionUnsupported $kind $target $reason)
                    (progn
                      (emit-telemetry "action_unsupported" "error"
-                       (string_concat (repr $target) ": " $reason) "")
+                       (string_concat (repr $target) (string_concat ": " $reason)) "")
                      (let* (($err_obs   (string_concat "ERROR: Unknown or unsupported action '"
                                           (string_concat (repr $target) (string_concat "'. " $reason))))
                             ($_log_obs  (state-add-failure $err_obs)))

@@ -18,6 +18,7 @@ import subprocess
 import hashlib
 from pathlib import Path
 from typing import Generator, List, Dict, Any, Optional
+from dotenv import load_dotenv
 
 from ui.event_protocol import (
     AgentEvent,
@@ -59,6 +60,7 @@ class PeTTAAgentClient:
 
         self.memory_dir.mkdir(parents=True, exist_ok=True)
         (self.workspace_dir / "logs").mkdir(parents=True, exist_ok=True)
+        load_dotenv(self.workspace_dir / ".env")
 
     # =========================================================================
     # Core Execution Stream
