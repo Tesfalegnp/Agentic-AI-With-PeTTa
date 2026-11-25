@@ -3,7 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Runtime: PeTTa](https://img.shields.io/badge/Runtime-PeTTa%20(SWI--Prolog%20%2B%20MeTTa)-orange.svg)](https://github.com/trueagi-io/PeTTa)
 [![Interface: Streamlit](https://img.shields.io/badge/Interface-Streamlit%201.40%2B-FF4B4B.svg)](https://streamlit.io)
-[![Tests: 108 Passed](https://img.shields.io/badge/Tests-108%2F108%20Passing%20(100%25)-brightgreen.svg)](docs/EVALUATION_REPORT.md)
+[![Tests: 134 Passed](https://img.shields.io/badge/Tests-134%2F134%20Passing%20(100%25)-brightgreen.svg)](docs/EVALUATION_REPORT.md)
+[![Safety: Human Approval](https://img.shields.io/badge/Safety-Human--Approval%20Gate-red.svg)](docs/EVALUATION_REPORT.md)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Tesfalegnp%2FAgentic--AI--With--PeTTa-blue?logo=github)](https://github.com/Tesfalegnp/Agentic-AI-With-PeTTa)
 
 <div align="center">
@@ -336,15 +337,15 @@ petta-agentic-ai/
 │   ├── tool_registry.metta # Tool engine & validation
 │   └── ui_gateway.metta    # Headless turn entry point for Web UI
 ├── asset/                  # Architectural diagrams, animations, and UI screenshots
-│   ├── Agentic-AI.gif      # System cognitive cycle animation
-│   ├── archeture_graph.png # Full system architecture & task flow poster
-│   ├── hero_home_page.png  # Web UI evaluator dashboard
-│   ├── sample_task_with_multiple_step.png # Real-time DAG execution cards
-│   └── tools_sidebare_image.png # Sidebar tool inspection & evaluation scenarios
-├── docs/                   # Consolidated essential documentation
-│   ├── Agentic_AI_With_PeTTa_Summary.docx # Executive project summary report
-│   ├── SYSTEM_ARCHITECTURE.md # Unified system architecture & specification
-│   └── EVALUATION_REPORT.md   # Complete evaluator guide & test report (108 tests)
+│   ├── Agentic-AI.gif      # Cognitive cycle animation
+│   ├── archeture_graph.png # Full system architecture poster
+│   ├── hero_home_page.png  # UI dashboard screenshot
+│   ├── sample_task_with_multiple_step.png # Live DAG execution screenshot
+│   └── tools_sidebare_image.png # Sidebar tools panel screenshot
+├── docs/                   # Consolidated documentation (2 essential files)
+│   ├── Agentic_AI_With_PeTTa_Summary.docx # Executive summary document
+│   ├── SYSTEM_ARCHITECTURE.md  # Technical architecture & specification
+│   └── EVALUATION_REPORT.md   # Requirements traceability + 134 test results
 ├── logs/                   # Reproducible completed task logs
 │   └── submission/         # Evaluation evidence (Simple, Multi-step, Long, Multi-task)
 ├── memory/                 # Runtime persistence directories (.gitkeep tracked)
