@@ -39,9 +39,11 @@
          (PlanNotFound $plan_id)
          (car-atom $found))))
 
-;; Add a Task to a Plan
+;; Add a Task to a Plan (safely removing any prior task with same task_id and plan_id)
 (= (plan-add-task $plan_id $task_id $description $executor_type $executor_name $arguments $dependencies)
    (progn
+     (collapse (match &plan_space (PlanTask $task_id $plan_id $old_d $old_t $old_n $old_a $old_dp $old_s $old_r)
+                      (remove-atom &plan_space (PlanTask $task_id $plan_id $old_d $old_t $old_n $old_a $old_dp $old_s $old_r))))
      (add-atom &plan_space (PlanTask $task_id $plan_id $description $executor_type $executor_name $arguments $dependencies pending none))
      (TaskAdded $plan_id $task_id)))
 

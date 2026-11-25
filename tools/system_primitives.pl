@@ -314,12 +314,9 @@ wait_for_process_timeout(PID, Timeout, Status) :-
 % Cap output to max_output_bytes to prevent context overflow
 cap_output(RawStr, CappedStr) :-
     max_output_bytes(MaxBytes),
-    string_bytes(RawStr, Bytes),
-    length(Bytes, Len),
+    string_length(RawStr, Len),
     (   Len > MaxBytes
-    ->  length(Prefix, MaxBytes),
-        append(Prefix, _, Bytes),
-        string_bytes(Trimmed, Prefix),
+    ->  sub_string(RawStr, 0, MaxBytes, _, Trimmed),
         string_concat(Trimmed, "\n...[OUTPUT TRUNCATED — exceeded 8KB limit]", CappedStr)
     ;   CappedStr = RawStr
     ), !.

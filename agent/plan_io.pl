@@ -43,8 +43,8 @@ validate_plan_graph(Tasks, Status, Message) :-
     ->  Status = error, Message = "Tasks must be a list."
     ;   Tasks == []
     ->  Status = error, Message = "Plan contains no tasks."
-    ;   length(Tasks, N), N > 10
-    ->  Status = error, Message = "Task count exceeds maximum limit of 10 tasks."
+    ;   length(Tasks, N), N > 25
+    ->  Status = error, Message = "Task count exceeds maximum limit of 25 tasks."
     ;   extract_task_ids(Tasks, Ids)
     ->  (   has_duplicates(Ids)
         ->  Status = error, Message = "Duplicate task IDs detected in plan."
@@ -126,7 +126,17 @@ is_planning_required(Query, [Decision, Reason]) :-
 %% Determines whether a query requires multi-step planning or direct action
 is_planning_required(Query, Decision, Reason) :-
     downcase_atom(Query, QLower),
-    (   % Keywords indicating multi-step workflows
+    (   % Explicit exceptions: iterative long tasks and conditional recovery must run in the cognitive loop
+        (   sub_atom(QLower, _, _, _, 'if that fails')
+        ;   sub_atom(QLower, _, _, _, 'if it fails')
+        ;   sub_atom(QLower, _, _, _, 'each turn')
+        ;   sub_atom(QLower, _, _, _, '20+ turn')
+        ;   sub_atom(QLower, _, _, _, '22-step')
+        ;   sub_atom(QLower, _, _, _, 'turn by turn')
+        )
+    ->  Decision = false,
+        Reason = "Iterative reasoning or conditional recovery handled dynamically by cognitive loop."
+    ;   % Keywords indicating multi-step workflows
         (   sub_atom(QLower, _, _, _, ' and then ')
         ;   sub_atom(QLower, _, _, _, ', then ')
         ;   sub_atom(QLower, _, _, _, 'workflow')

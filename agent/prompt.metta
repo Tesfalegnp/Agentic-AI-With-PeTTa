@@ -130,7 +130,11 @@ Response: (action ask_user \"What expression or values would you like me to calc
 
 Example 9 (Completion):
 User: Summarize the article and finalize our session.
-Response: (action finish \"The requested summary has been provided and the session is complete.\")")
+Response: (action finish \"The requested summary has been provided and the session is complete.\")
+
+Example 10 (Iterative Step-by-Step / Long Task Execution):
+User: Perform a computation pipeline: start with accumulator=0, increment by 1 each turn using calculator tool.
+Response: (action use_tool calculator (\"0 + 1\"))")
 
 ;; 6. Memory-Aware Context and Query Assembler with Context Budgeting
 (= (build-agent-prompt $context $query)

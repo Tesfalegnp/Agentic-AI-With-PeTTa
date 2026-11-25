@@ -98,6 +98,42 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
+    # Provider & API Key Configuration Settings (Live Evaluator Switcher)
+    with st.expander("⚙️ LLM Provider & Key Settings", expanded=False):
+        provider_options = ["gemini", "openai", "deepseek", "generic_openai"]
+        current_p = os.environ.get("LLM_PROVIDER", "gemini").lower().strip()
+        idx = provider_options.index(current_p) if current_p in provider_options else 0
+        selected_provider = st.selectbox("Select LLM Provider", provider_options, index=idx, key="sb_provider")
+
+        key_env_var = {
+            "gemini": "GEMINI_API_KEY",
+            "openai": "OPENAI_API_KEY",
+            "deepseek": "DEEPSEEK_API_KEY",
+            "generic_openai": "GENERIC_API_KEY"
+        }[selected_provider]
+
+        current_val = os.environ.get(key_env_var, "")
+        new_key_input = st.text_input(
+            f"{selected_provider.upper()} API Key",
+            value=current_val,
+            type="password",
+            placeholder=f"Paste {selected_provider} key here...",
+            key="sb_key_input"
+        )
+
+        col_save, col_clear = st.columns(2)
+        with col_save:
+            if st.button("💾 Apply Key", use_container_width=True, type="primary"):
+                os.environ["LLM_PROVIDER"] = selected_provider
+                if new_key_input.strip():
+                    os.environ[key_env_var] = new_key_input.strip()
+                st.success(f"Applied {selected_provider.upper()}!")
+                st.rerun()
+        with col_clear:
+            if st.button("🔄 Reload .env", use_container_width=True):
+                load_dotenv(PROJECT_ROOT / ".env", override=True)
+                st.rerun()
+
     # Memory & Adaptation Metrics
     col_m1, col_m2 = st.columns(2)
     with col_m1:
@@ -265,7 +301,7 @@ with st.expander("🎯 Evaluator Demonstrations — Click to Load & Run", expand
         },
         {
             "label": "2. Long Task (20+ Turns)",
-            "query": "Perform a 22-step computation pipeline: start with accumulator=0, increment by 1 each turn using the calculator tool, store each intermediate result, and report the final value.",
+            "query": "Execute an iterative accumulation pipeline: start with accumulator=0, increment by 1 each turn using the calculator tool, store each intermediate result, and report the final value.",
             "desc": "Tests 22+ agent turns, context budget, goal preservation."
         },
         {
@@ -290,7 +326,7 @@ with st.expander("🎯 Evaluator Demonstrations — Click to Load & Run", expand
         },
         {
             "label": "7. Context Stress",
-            "query": "List all files in /tmp using run_command, analyze the output with word_counter, then calculate the number of items squared, then write a summary to /tmp/stress_test.txt.",
+            "query": "Run the command 'ls /tmp' using run_command, then count the words in the output with word_counter, and write the count summary to /tmp/stress_test.txt.",
             "desc": "Tests large output handling and context compaction."
         },
         {

@@ -48,7 +48,7 @@ User Goal: \"" (string_concat $query (string_concat "\"
 " (string_concat $skills_desc "
 
 INSTRUCTIONS:
-Decompose the user goal into 2 to 5 ordered tasks.
+Decompose the user goal into 2 to 10 ordered tasks.
 Respond ONLY with a structured (plan-proposal ...) S-expression without code fences, markdown, or commentary.
 
 Syntax:
@@ -65,7 +65,7 @@ Rules:
 3. Use only registered tools: calculator, word_counter, text_analyzer, string_reverser, datetime, read_file, write_file, run_command, send_message, web_search.
 4. Use only registered skills: math_skill, text_process_skill, research_skill.
 5. Task dependencies (<dep1> ...) must refer to prior task IDs in the plan (e.g. () for no dependencies, (t1) to depend on t1).
-6. Arguments must be a list of values, NOT key-value pairs. e.g. (\"some text\") or (\"50 * 4\") or ((ref t1)).
+6. Arguments must be a list of values, NOT key-value pairs, and NOT nested compound expressions like concat. Use simple literal strings/numbers or direct reference (ref t1). e.g. (\"some text\") or (\"50 * 4\") or ((ref t1)).
 7. Output MUST start with (plan-proposal and end with ). No code fences, no other text!
 
 Example Proposal:

@@ -9,6 +9,7 @@
 !(import! &self "loop.metta")
 !(import! &self "memory_core.metta")
 !(import! &self "adaptation_persistence.metta")
+!(import! &self "plan_state.metta")
 
 ;; Dispatch and record final gateway result using case matching
 (= (process-gateway-result $res)
@@ -74,6 +75,7 @@
 ;; Main gateway runner
 (= (run-ui-gateway-turn)
    (progn
+     (plan-clear-all)
      (memory-init)
      (adaptation-load-from-disk)
      (clear-telemetry)

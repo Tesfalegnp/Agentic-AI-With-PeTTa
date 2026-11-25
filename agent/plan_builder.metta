@@ -46,11 +46,13 @@
 
 ;; Build and store plan from a parsed plan-proposal structure
 (= (build-plan-from-proposal $goal_id (plan-proposal $desc $tasks))
-   (let $plan_res (plan-create $goal_id $desc)
-     (case $plan_res
-       (((PlanCreated $plan_id)
-         (let $pop_res (populate-plan-tasks $plan_id $tasks)
-           (case $pop_res
-             (((TasksPopulated $pid) (PlanBuilt $plan_id))
-              ((PlanBuildError $err) (PlanBuildFailed $err))))))
-        ($_ (PlanBuildFailed "Unable to create plan in state."))))))
+   (progn
+     (plan-clear-all)
+     (let $plan_res (plan-create $goal_id $desc)
+       (case $plan_res
+         (((PlanCreated $plan_id)
+           (let $pop_res (populate-plan-tasks $plan_id $tasks)
+             (case $pop_res
+               (((TasksPopulated $pid) (PlanBuilt $plan_id))
+                ((PlanBuildError $err) (PlanBuildFailed $err))))))
+          ($_ (PlanBuildFailed "Unable to create plan in state.")))))))

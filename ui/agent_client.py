@@ -395,21 +395,25 @@ class PeTTAAgentClient:
 
     def get_system_status(self) -> Dict[str, Any]:
         """Reads configuration and runtime status without exposing credentials."""
-        provider = os.environ.get("LLM_PROVIDER", "gemini")
+        provider = os.environ.get("LLM_PROVIDER", "gemini").lower().strip()
         model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
         if provider == "openai":
             model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
         elif provider == "deepseek":
             model = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+        elif provider in ("generic_openai", "generic"):
+            model = os.environ.get("GENERIC_MODEL", "llama-3.3-70b-versatile")
 
         # Check API key configured (without revealing it)
         api_key_configured = False
         if provider == "gemini":
-            api_key_configured = bool(os.environ.get("GEMINI_API_KEY", ""))
+            api_key_configured = bool(os.environ.get("GEMINI_API_KEY", "").strip())
         elif provider == "openai":
-            api_key_configured = bool(os.environ.get("OPENAI_API_KEY", ""))
+            api_key_configured = bool(os.environ.get("OPENAI_API_KEY", "").strip())
         elif provider == "deepseek":
-            api_key_configured = bool(os.environ.get("DEEPSEEK_API_KEY", ""))
+            api_key_configured = bool(os.environ.get("DEEPSEEK_API_KEY", "").strip())
+        elif provider in ("generic_openai", "generic"):
+            api_key_configured = bool(os.environ.get("GENERIC_API_KEY", "").strip())
 
         tools = [
             {"name": "calculator",      "description": "Mathematical expression evaluator",           "category": "math"},
