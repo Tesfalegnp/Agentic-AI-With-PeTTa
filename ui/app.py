@@ -415,8 +415,9 @@ for msg in st.session_state.messages:
                     for t in tasks:
                         status_icon = {"completed": "✅", "failed": "❌",
                                        "running": "⚙️", "pending": "⏳"}.get(t.status, "🔹")
+                        task_name = getattr(t, "name", getattr(t, "tool_or_skill", "task"))
                         st.markdown(
-                            f"{status_icon} **{t.task_id}**: `{t.tool_or_skill}` — {t.status}"
+                            f"{status_icon} **{t.task_id}**: `{task_name}` — {t.status}"
                         )
 
             # Execution timeline

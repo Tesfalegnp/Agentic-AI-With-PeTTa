@@ -79,6 +79,11 @@ class PlanTaskItem:
     status: str = "pending"  # pending, ready, running, completed, failed, blocked, skipped
     result: str = ""
 
+    @property
+    def tool_or_skill(self) -> str:
+        """Backward-compatible alias for task name."""
+        return self.name
+
 
 @dataclass
 class AgentExecutionResult:
