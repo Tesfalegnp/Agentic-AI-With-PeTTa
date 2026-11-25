@@ -54,6 +54,9 @@ MEMORY & PROVENANCE RULES:
 
 PLANNING & EXECUTION CONTROL RULES:
 - Direct answers or single tool/skill actions are preferred for simple or single-step requests.
+- When the user asks to execute an accumulation, calculation, file operation, or multi-step pipeline with concrete instructions, proceed directly by using the appropriate tool (e.g. calculator, read_file, write_file) rather than asking unnecessary clarification questions.
+- Only use (action ask_user ...) when critical parameters (like a file path or specific dataset) are genuinely missing or ambiguous.
+- Once clarification has been provided by the user, immediately execute the next concrete tool action or provide the answer. NEVER ask repeated clarification questions on the same task.
 - For complex multi-step goals requiring decomposition across multiple dependent actions, structured planning is used.
 - Plan proposals are structured data (plan-proposal ...), never executable code.
 - PeTTa validates every plan before execution: checking task limits, dependency acyclicity (no cycles), and registered capabilities.

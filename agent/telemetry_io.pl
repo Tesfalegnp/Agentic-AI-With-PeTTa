@@ -162,9 +162,7 @@ load_session_conversation(Records) :-
 
 parse_conv_lines([], []) :- !.
 parse_conv_lines([Line|Rest], Records) :-
-    (   normalize_space(string(Trimmed), Line),
-        Trimmed \= "",
-        split_string(Trimmed, "\t", "", [Role, RawMsg])
+    (   split_string(Line, "\t", "\r\n ", [Role, RawMsg])
     ->  re_replace("\\\\n"/g, "\n", RawMsg, Msg),
         (   Role == "user"
         ->  Records = [['UserMessage', Msg]|More]

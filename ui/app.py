@@ -172,7 +172,7 @@ with st.sidebar:
         st.markdown(f"**Risk:** {pa.get('risk','Potentially destructive')}")
         st.warning("⚠️ This command will NOT run until you explicitly approve it.")
 
-        col_a, col_d = st.columns(2)
+        col_a, col_s, col_d = st.columns(3)
         with col_a:
             if st.button("✅ APPROVE", type="primary", use_container_width=True):
                 client.submit_approval_decision(
@@ -181,7 +181,17 @@ with st.sidebar:
                     "approved"
                 )
                 st.session_state.pending_approval = None
-                st.success("Command approved! Re-run your query to continue.")
+                st.success("Command approved! Resuming execution...")
+                st.rerun()
+        with col_s:
+            if st.button("⏭️ SKIP", use_container_width=True):
+                client.submit_approval_decision(
+                    pa.get("command", ""),
+                    pa.get("risk", ""),
+                    "denied"
+                )
+                st.session_state.pending_approval = None
+                st.info("Command skipped. Continuing task safely...")
                 st.rerun()
         with col_d:
             if st.button("❌ DENY", use_container_width=True):
@@ -191,7 +201,7 @@ with st.sidebar:
                     "denied"
                 )
                 st.session_state.pending_approval = None
-                st.error("Command denied. The agent will receive a denial message.")
+                st.error("Command denied.")
                 st.rerun()
 
         st.markdown("---")
@@ -209,6 +219,12 @@ with st.sidebar:
         </div>
         """, unsafe_allow_html=True)
         st.info(f"**Agent asks:** {st.session_state.clarification_question}")
+        if st.button("🚫 Cancel Suspended Task", key="btn_cancel_clarify_sb", use_container_width=True):
+            st.session_state.awaiting_clarification = False
+            st.session_state.clarification_question = ""
+            client.clear_conversation()
+            st.warning("Suspended task cancelled.")
+            st.rerun()
         st.caption("Type your answer in the chat box to resume the suspended task.")
         st.markdown("---")
 
@@ -285,9 +301,8 @@ with st.sidebar:
 st.markdown("""
 <div class="main-header">
     <div style="display:flex;gap:0.5rem;margin-bottom:0.75rem;flex-wrap:wrap;">
-        <span class="arch-badge">Academic Competition</span>
-        <span class="arch-badge" style="background-color:#10b981;">PeTTa Native Intelligence</span>
-        <span class="arch-badge" style="background-color:#8b5cf6;">108 Tests Passing</span>
+        <span class="arch-badge">Weekly Hackaton Competition</span>
+        <span class="arch-badge" style="background-color:#10b981;">Petta Agentic</span>
         <span class="arch-badge" style="background-color:#f59e0b;color:#1e293b;">Human-in-the-Loop Safety</span>
     </div>
     <h1>PeTTa Agentic AI Assistant</h1>
@@ -313,7 +328,7 @@ with st.expander("🎯 Evaluator Demonstrations — Click to Load & Run", expand
         },
         {
             "label": "2. Long Task (20+ Turns)",
-            "query": "Execute an iterative accumulation pipeline for 22 turns: start with accumulator=0, increment by 1 each turn using the calculator tool, store each intermediate result, and report the final value.",
+            "query": "Execute an iterative accumulation pipeline and ask me again how many turns: start with accumulator=0, increment by 1 each turn using the calculator tool, store each intermediate result, and report the final value.",
             "desc": "Tests 22+ agent turns, context budget, goal preservation."
         },
         {
@@ -543,9 +558,18 @@ if st.session_state.awaiting_clarification:
     """, unsafe_allow_html=True)
     with st.form("clarification_form", clear_on_submit=True):
         ans_text = st.text_input("Your clarification response:", placeholder="e.g. Use the file /tmp/dataset.txt", key="form_ans")
-        submitted = st.form_submit_button("▶ Submit & Resume Task", type="primary", use_container_width=True)
-        if submitted and ans_text.strip():
-            clarification_input = ans_text.strip()
+        col_c_sub, col_c_canc = st.columns([2, 1])
+        with col_c_sub:
+            submitted = st.form_submit_button("▶ Submit & Resume Task", type="primary", use_container_width=True)
+            if submitted and ans_text.strip():
+                clarification_input = ans_text.strip()
+        with col_c_canc:
+            cancelled = st.form_submit_button("🚫 Cancel Task", use_container_width=True)
+            if cancelled:
+                st.session_state.awaiting_clarification = False
+                st.session_state.clarification_question = ""
+                client.clear_conversation()
+                st.rerun()
 
 user_query = st.chat_input(
     "Ask a question or enter a task..." if not st.session_state.awaiting_clarification
