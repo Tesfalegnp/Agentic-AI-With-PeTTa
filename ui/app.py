@@ -28,8 +28,58 @@ if str(PROJECT_ROOT) not in sys.path:
 
 import streamlit as st
 from ui.agent_client import PeTTAAgentClient
-from ui.event_protocol import AgentEvent, AgentExecutionResult, STAGE_ICONS
+from ui.event_protocol import AgentEvent, AgentExecutionResult, STAGE_ICONS, PlanTaskItem
 from ui.styles import CUSTOM_CSS
+
+
+def generate_plan_dag_dot(tasks: list, goal: str = "Cognitive Plan") -> str:
+    """Generate Graphviz DOT diagram for plan execution graph."""
+    lines = [
+        'digraph PlanDAG {',
+        '  rankdir=LR;',
+        '  bgcolor="transparent";',
+        '  node [fontname="sans-serif", fontsize=10, shape=box, style="rounded,filled", margin="0.2,0.1"];',
+        '  edge [fontname="sans-serif", fontsize=9, color="#64748b", arrowsize=0.7, penwidth=1.5];',
+    ]
+    goal_label = (goal[:32] + "...") if len(goal) > 32 else goal
+    lines.append(f'  __goal__ [label="🎯 {goal_label}", fillcolor="#1e293b", fontcolor="#ffffff", color="#6366f1", penwidth=2.0];')
+    prev_node = '__goal__'
+    for t in tasks:
+        node_id = str(getattr(t, "task_id", "task")).replace("-", "_").replace(" ", "_")
+        name = str(getattr(t, "name", getattr(t, "tool_or_skill", "task")))
+        status = str(getattr(t, "status", "pending")).lower()
+        if status == "completed":
+            fill = "#10b981"
+            font = "#ffffff"
+            border = "#059669"
+            badge = "✅ COMPLETED"
+        elif status in ("running", "ready"):
+            fill = "#f59e0b"
+            font = "#1e293b"
+            border = "#d97706"
+            badge = "⚙️ RUNNING"
+        elif status == "failed":
+            fill = "#ef4444"
+            font = "#ffffff"
+            border = "#b91c1c"
+            badge = "❌ FAILED"
+        elif status in ("blocked", "awaiting_approval"):
+            fill = "#0ea5e9"
+            font = "#ffffff"
+            border = "#0284c7"
+            badge = "🔒 BLOCKED"
+        else:
+            fill = "#334155"
+            font = "#cbd5e1"
+            border = "#475569"
+            badge = "⏳ PENDING"
+
+        clean_name = name.replace('"', '\\"')
+        lines.append(f'  {node_id} [label="{node_id}: {clean_name}\\n[{badge}]", fillcolor="{fill}", fontcolor="{font}", color="{border}", penwidth=1.5];')
+        lines.append(f'  {prev_node} -> {node_id};')
+        prev_node = node_id
+    lines.append('}')
+    return "\n".join(lines)
 
 # ==============================================================================
 # Page Configuration
@@ -424,12 +474,20 @@ for msg in st.session_state.messages:
                     unsafe_allow_html=True
                 )
 
-            # Task plan cards
+            # Interactive Visual Reasoning & Plan Execution Graph (DAG)
             if tasks:
-                with st.expander(f"📋 Task Plan ({len(tasks)} steps)", expanded=False):
+                with st.expander(f"🗺️ Visual Reasoning & Plan Execution Graph ({len(tasks)} steps)", expanded=True):
+                    try:
+                        dag_dot = generate_plan_dag_dot(tasks, goal="Execution Pipeline")
+                        st.graphviz_chart(dag_dot, use_container_width=True)
+                    except Exception as err:
+                        st.caption(f"Graph renderer notice: {err}")
+
+                    st.markdown("**Detailed Steps:**")
                     for t in tasks:
                         status_icon = {"completed": "✅", "failed": "❌",
-                                       "running": "⚙️", "pending": "⏳"}.get(t.status, "🔹")
+                                       "running": "⚙️", "pending": "⏳",
+                                       "blocked": "🔒", "ready": "⚡"}.get(t.status, "🔹")
                         task_name = getattr(t, "name", getattr(t, "tool_or_skill", "task"))
                         st.markdown(
                             f"{status_icon} **{t.task_id}**: `{task_name}` — {t.status}"
