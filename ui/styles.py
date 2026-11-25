@@ -113,9 +113,12 @@ code, pre {
 }
 
 /* Sidebar Customization */
-[data-testid="stSidebar"] {
-    background-color: #f8fafc !important;
-    border-right: 1px solid #e2e8f0 !important;
+[data-testid="stSidebar"],
+section[data-testid="stSidebar"],
+div[data-testid="stSidebarUserContent"] {
+    background-color: #0f172a !important;
+    color: #f8fafc !important;
+    border-right: 1px solid #334155 !important;
 }
 
 /* Sidebar Headings and Labels */
@@ -123,35 +126,35 @@ code, pre {
 [data-testid="stSidebar"] h2,
 [data-testid="stSidebar"] h3,
 [data-testid="stSidebar"] h4 {
-    color: #0f172a !important;
+    color: #38bdf8 !important;
     font-weight: 700 !important;
 }
 
 [data-testid="stSidebar"] p,
 [data-testid="stSidebar"] span,
 [data-testid="stSidebar"] label {
-    color: #1e293b !important;
+    color: #e2e8f0 !important;
 }
 
 /* Sidebar Expander Customization - High Contrast Differentiation */
 [data-testid="stSidebar"] [data-testid="stExpander"],
 [data-testid="stSidebar"] details {
-    background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
+    background-color: #1e293b !important;
+    border: 1px solid #475569 !important;
     border-radius: 8px !important;
     margin-top: 0.5rem !important;
     margin-bottom: 0.75rem !important;
     overflow: hidden !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
 }
 
-/* Expander Header/Summary - High Contrast Dark Slate with Crisp White Text */
+/* Expander Header/Summary - High Contrast Slate with Vibrant Cyan Text */
 [data-testid="stSidebar"] [data-testid="stExpander"] summary,
 [data-testid="stSidebar"] details summary {
-    background-color: #1e293b !important;
+    background-color: #334155 !important;
     color: #ffffff !important;
     font-weight: 600 !important;
-    padding: 0.6rem 0.85rem !important;
+    padding: 0.65rem 0.9rem !important;
     border-radius: 6px !important;
     cursor: pointer !important;
     transition: background-color 0.15s ease-in-out;
@@ -159,8 +162,8 @@ code, pre {
 
 [data-testid="stSidebar"] [data-testid="stExpander"] summary:hover,
 [data-testid="stSidebar"] details summary:hover {
-    background-color: #0f172a !important;
-    color: #ffffff !important;
+    background-color: #475569 !important;
+    color: #38bdf8 !important;
 }
 
 /* Expander Header Text & SVG Chevron */
@@ -168,7 +171,7 @@ code, pre {
 [data-testid="stSidebar"] [data-testid="stExpander"] summary span,
 [data-testid="stSidebar"] details summary p,
 [data-testid="stSidebar"] details summary span {
-    color: #ffffff !important;
+    color: #f8fafc !important;
     font-weight: 600 !important;
 }
 
@@ -178,20 +181,20 @@ code, pre {
     fill: #38bdf8 !important;
 }
 
-/* Expander Content Details - Crisp White Background with Deep Dark Text */
+/* Expander Content Details - Deep Dark Surface with Crisp Light Text */
 [data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"],
 [data-testid="stSidebar"] details > div,
 [data-testid="stSidebar"] [data-testid="stExpander"] div[role="region"] {
-    background-color: #ffffff !important;
-    color: #0f172a !important;
+    background-color: #1e293b !important;
+    color: #f1f5f9 !important;
     padding: 0.85rem 1rem !important;
-    border-top: 1px solid #e2e8f0 !important;
+    border-top: 1px solid #334155 !important;
 }
 
 [data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"] *,
 [data-testid="stSidebar"] details > div *,
 [data-testid="stSidebar"] [data-testid="stExpander"] div[role="region"] * {
-    color: #1e293b !important;
+    color: #e2e8f0 !important;
     background-color: transparent;
 }
 
@@ -199,63 +202,48 @@ code, pre {
 [data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"] b,
 [data-testid="stSidebar"] details > div strong,
 [data-testid="stSidebar"] details > div b {
-    color: #020617 !important;
+    color: #38bdf8 !important;
     font-weight: 700 !important;
 }
 
 [data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"] li,
 [data-testid="stSidebar"] details > div li {
-    color: #334155 !important;
+    color: #cbd5e1 !important;
     margin-bottom: 0.35rem !important;
     line-height: 1.4 !important;
 }
 
 [data-testid="stSidebar"] [data-testid="stExpander"] [data-testid="stExpanderDetails"] code,
 [data-testid="stSidebar"] details > div code {
-    background-color: #f1f5f9 !important;
-    color: #0369a1 !important;
-    padding: 0.15rem 0.4rem !important;
+    background-color: #0f172a !important;
+    color: #7dd3fc !important;
+    padding: 0.2rem 0.45rem !important;
     border-radius: 4px !important;
-    border: 1px solid #e2e8f0 !important;
-    font-size: 0.85em !important;
-}
-
-/* Global Expander High-Contrast Safeguard */
-[data-testid="stExpander"] {
-    border: 1px solid #e2e8f0 !important;
-    border-radius: 8px !important;
-}
-
-[data-testid="stExpander"] summary {
-    font-weight: 600 !important;
-}
-
-/* Chat Message Styling */
-[data-testid="stChatMessage"] {
-    border-radius: 10px;
-    margin-bottom: 0.5rem;
+    border: 1px solid #334155 !important;
+    font-size: 0.88em !important;
 }
 
 /* Subsystem Metrics Card */
 .metric-box {
-    background-color: #f1f5f9;
+    background-color: #1e293b;
     border-radius: 8px;
     padding: 0.75rem;
     margin-bottom: 0.5rem;
-    border-left: 4px solid #3b82f6;
+    border: 1px solid #334155;
+    border-left: 4px solid #38bdf8;
 }
 
 .metric-box h4 {
     margin: 0;
     font-size: 0.85rem;
-    color: #475569;
+    color: #94a3b8 !important;
 }
 
 .metric-box p {
     margin: 0.2rem 0 0 0;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #0f172a;
+    color: #f8fafc !important;
 }
 </style>
 """
